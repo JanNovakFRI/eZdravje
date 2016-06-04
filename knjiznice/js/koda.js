@@ -125,6 +125,9 @@ $(document).ready(function(){
 
     izpolniObrazec("#preberiObstojeciEHR","#preberiEHRzapis");
     izpolniObrazec("#preberiObstojeciVitalniZnak","#vnosMeritevVitalnihZnakov");
+    izpolniObrazec("#preberiEHRzapis","#preberiEHRzapis");
+    izpolniObrazec("#vnosMeritevVitalnihZnakov","#vnosMeritevVitalnihZnakov");
+
 
     $("#generiraj").click(function(){
         sestaviSporocilo("#globalnaSporocila","warning",true,"Poteka generiranje vzorčnih podatkov, prosimo počakajte!");

@@ -23,8 +23,6 @@ function popraviCas(time) {
     Za vec podatkov uporabi locilnik => |
 **/
 function izpolniObrazec(source, destination) {
-    //(destination,"#" + $(destination).find('button').first().attr('id'));
-
     $("#" + $(destination).find('button').first().attr('id')).prop('disabled', true);
 
     $(source).find('input').on('input', function() {
@@ -36,17 +34,11 @@ function izpolniObrazec(source, destination) {
         var arr = value.split("|");
 
         $(destination).find('input').each(function(index, field) {
-            if ($(field).attr('id') == "dodajVitalnoDatumInUra") {
-                var date = new Date();
-                var val = date.getFullYear() + "-" + popraviCas(date.getMonth() + 1) + "-" + popraviCas(date.getDate()) + "T" + popraviCas(date.getHours()) + ":" + popraviCas(date.getMinutes()) + "Z";
-
-                if (index >= arr.length) $(field).val('');
-                else $(field).val(val);
-            } else {
-                if (index >= arr.length) $(field).val('');
-                else $(field).val(arr[index]);
-            }
-
+                if (source != destination)
+                {
+                    if (index >= arr.length) $(field).val('');
+                    else $(field).val(arr[index]);
+                }
         });
 
         preveriVeljavnostObrazca(destination, "#" + $(destination).find('button').first().attr('id'));
