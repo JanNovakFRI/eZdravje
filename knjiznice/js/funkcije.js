@@ -88,7 +88,7 @@ function nakljucnoStevilo(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-function vnosVitalnihMeritev(pacient, globalno, random, teza, visina, callback) {
+function vnosVitalnihMeritev(pacient, globalno, random, teza, visina, callback, callbackData) {
     var ehr = $("#EHR_ID_ACTIVE").val();
     if (pacient != "") ehr = pacient;
 
@@ -165,7 +165,7 @@ function vnosVitalnihMeritev(pacient, globalno, random, teza, visina, callback) 
             contentType: 'application/json',
             data: JSON.stringify(podatki),
             success: function(res) {
-                if (callback) callback();
+                if (callback) callback(callbackData.ehr,callbackData.ime,callbackData.priimek);
                 if (!globalno) sestaviSporocilo("#dodajMeritveVitalnihZnakovSporocilo", "success", false, "Meritve uspešno vnesene. Osvežite podatke!");
             },
             error: function(err) {
@@ -463,8 +463,10 @@ function zaokrozi(num) {
 function generiraj(userID) {
     sessionId = getSessionId();
 
+    var seed = nakljucnoStevilo(0,10000000);
+
     $.ajax({
-        url: 'https://randomuser.me/api/?nat=us,gb,de&inc=name',
+        url: 'https://randomuser.me/api/?nat=us,gb,de&inc=name&seed=' + Math.round(seed),
         dataType: 'json',
         success: function(data) {
             var date = nakljucniDatum(new Date(1920, 0, 1), new Date(2000, 0, 1));
@@ -511,17 +513,22 @@ function generiraj(userID) {
                                     var initTeza = nakljucnoStevilo(62, 120);
                                     var initVisina = nakljucnoStevilo(160, 210);
 
-                                    var success = function() {
+                                    var success = function(ehr,ime,priimek) {
                                         sestaviSporocilo("#globalnaSporocila", "success", true,
-                                            "Pacient <span class='patient-special'>" + ime + " " + priimek + "</span>, EHR ID: <span class='patient-special'>" + ehrId + "</span>"
+                                            "Pacient <span class='patient-special'>" + ime + " " + priimek + "</span>, EHR ID: <span class='patient-special'>" + ehr + "</span>"
                                         );
                                     }
 
+                                    var callback_data = {
+                                            ime: ime,
+                                            priimek: priimek,
+                                            ehr: ehrId
+                                    };
                                     vnosVitalnihMeritev(ehrId, true, true, initTeza, initVisina);
                                     vnosVitalnihMeritev(ehrId, true, true, nakljucnoStevilo(initTeza - 5, initTeza + 5), initVisina + 2);
                                     vnosVitalnihMeritev(ehrId, true, true, nakljucnoStevilo(initTeza - 5, initTeza + 5), initVisina + 2);
                                     vnosVitalnihMeritev(ehrId, true, true, nakljucnoStevilo(initTeza - 5, initTeza + 5), initVisina + 2);
-                                    vnosVitalnihMeritev(ehrId, true, true, nakljucnoStevilo(initTeza - 5, initTeza + 5), initVisina + 2, success);
+                                    vnosVitalnihMeritev(ehrId, true, true, nakljucnoStevilo(initTeza - 5, initTeza + 5), initVisina + 2, success,callback_data );
                                 }
                             },
                             error: function(err) {
