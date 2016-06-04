@@ -1,50 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <title>eZdravje :: 4. DN :: OIS 2015/2016</title>
-  <link href="knjiznice/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {padding-top: 70px;}
-  </style>
-  <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
-  <script src="knjiznice/js/bootstrap.min.js"></script>
-  <script src="knjiznice/js/koda.js"></script>
+    <meta charset="utf-8">
+    <title>eZdravje :: 4. DN :: OIS 2015/2016</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="knjiznice/css/bootstrap.min.css" rel="stylesheet">
+    <link href="knjiznice/css/bootflat.min.css" rel="stylesheet">
+    <link href="knjiznice/css/custom.css" rel="stylesheet">
+    <link href="https://code.jquery.com/ui/1.11.4/themes/cupertino/jquery-ui.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+    <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="knjiznice/js/bootstrap.min.js"></script>
+    <script src="knjiznice/js/chart.min.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2KjpcpBlL7aofrSgxMWqRzyM-KeBNJ0g&callback=initMap&libraries=places"
+    async defer></script>
+
+    <script src="knjiznice/js/funkcije.js"></script>
+    <script src="knjiznice/js/koda.js"></script>
+
 </head>
+
 <body>
 
-  <!-- ZAČETEK: Menujska vrstica na vrhu spletne strani -->
-  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menujska-vrstica">
-          <span class="sr-only">Prikaži menu</span>
-          <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-        </button>
-        <!-- ZAČETEK: Ime vaše aplikacije -->
-        <a class="navbar-brand" href="index.html">{ime vaše aplikacije}</a>
-        <!-- KONEC: Ime vaše aplikacije -->
-      </div>
-      <div class="collapse navbar-collapse" id="menujska-vrstica">
-        <ul class="nav navbar-nav">
-          <li><a href="opis.html">Opis ideje</a></li>
-          <li><a href="nacrt.html">Načrt informacijske rešitve</a></li>
-          <li><a href="#">Generiranje podatkov</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- KONEC: Menujska vrstica na vrhu spletne strani -->
+    <!-- ZAČETEK: Menujska vrstica na vrhu spletne strani -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menujska-vrstica">
+                    <span class="sr-only">Prikaži menu</span>
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <!-- ZAČETEK: Ime vaše aplikacije -->
+                <a class="navbar-brand" href="index.html">
+                    <i class="fa fa-heartbeat heart" aria-hidden="true"></i> eSrček
+                </a>
+                <!-- KONEC: Ime vaše aplikacije -->
+            </div>
+            <div class="collapse navbar-collapse" id="menujska-vrstica">
+                <ul class="nav navbar-nav">
+                    <li><a href="opis.html">Opis ideje</a></li>
+                    <li><a href="nacrt.html">Načrt informacijske rešitve</a></li>
+                    <li><a href="#" id="generiraj">Generiranje podatkov</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- KONEC: Menujska vrstica na vrhu spletne strani -->
 
-  <!-- ZAČETEK: Vsebina aplikacije -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <p class="lead"><strong>TO-DO</strong>: Na tem mestu implementirajte vašo aplikacijo.</p>
-      </div>
+    <!-- ZAČETEK: Vsebina aplikacije -->
+    <div class="container">
+        <input id="EHR_ID_ACTIVE" type="hidden" class="form-control input-mini">
+
+        <div class="row">
+            <div class="col-lg-12" id="globalnaSporocila">
+                <!--div class="msg alert alert-success alert-dissmissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    Aplikacija je namenjena prepoznavanju motenj srčnega utripa. Aplikacija na podlagi vitalnih meritev pacienta in njegovega življenjskega stila sporoči, če ima pacient morda težave s srcem in kaj se mu priporoča.
+                </div-->
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <!--Izbira pacienta -->
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8"><b>Preberi EHR kartoteko</b> obstoječega bolnika</div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <select class="form-control input-sm" id="preberiObstojeciEHR">
+                                    <option value="">Izberi pacienta</option>
+                                    <option value="776111fb-bbe4-4e63-9b85-ddb83b9b92d3">Greg Sutton</option>
+                                    <option value="fd3ef4f4-6896-446c-b8b7-9491c8dcaab1">Tiffany Moore</option>
+                                    <option value="ca768cde-3a2b-4999-8404-7acfff6be0a6"> Jana Bartsch</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" id="preberiEHRzapis">
+                        <span class="label label-default">EHR ID</span>
+                        <input id="EHR_ID" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
+                        <button type="button" id="preberiEHR" class="btn btn-primary btn-xs">Preberi kartoteko</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row patient-data">
+            <!-- Podatki o pacientu -->
+            <div class="col-lg-6 col-md-6 col-sm-6">
+
+                <!-- Osnovne informacije o pacientu -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">Osnovne informacije o pacientu</div>
+                        </div>
+                    </div>
+                    <div class="panel-body" id="preberiEHRzapis">
+                        <div class="patient-info">
+                            <p>Ime in priimek: <span id="patient-name">-</span></p>
+                            <p>Datum rojstva: <span id="patient-birthday">-</span></p>
+                            <!--p>Starost: <span class="patient-age">22 let</span></p-->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Izvidi pacienta -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">Izvidi pacienta</div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 text-right">
+                                <span class="refresh"><i class="fa fa-refresh" aria-hidden="true"></i> Osveži podatke</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="patient-detail-info">
+                            <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Zapis:</th>
+                                    <th>Vrednost:</th>
+                                    <th>Stanje:</th>
+                                  </tr>
+                                </thead>
+
+                                <tbody>
+                                  <tr id="patient-height">
+                                    <td>Telesna višina</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr id="patient-weight">
+                                    <td>Telesna teža</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr id="patient-bmi">
+                                    <td>Indeks telesne mase</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr id="patient-temperature">
+                                    <td>Telesna temperatura</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr id="patient-pressure-1">
+                                    <td>Sistolični krvni tlak</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr id="patient-pressure-2">
+                                    <td>Diastolični krvni tlak</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr id="patient-blood">
+                                    <td>Nasičenost krvi s kisikom</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr id="patient-pulse">
+                                    <td>Srčni utrip</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Vnos vitalnih meritev -->
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8"><b>Vnos</b> meritve <b>vitalnih znakov</b> bolnika</div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <select class="form-control input-sm" id="preberiObstojeciVitalniZnak">
+                                    <option value="">Izberi predlogo</option>
+                                    <option value="185|80.0|36.5|118|92|98|60">Predloga 1</option>
+                                    <option value="185|85.0|42.5|110|92|98|122">Predloga 2</option>
+                                    <option value="185|90.0|39.5|140|92|92|55">Predloga 3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" id="vnosMeritevVitalnihZnakov">
+
+                        <span class="label label-default">Telesna višina</span>
+                        <div class="input-group">
+                            <input id="dodajVitalnoTelesnaVisina" type="number" class="form-control input-mini" placeholder="185">
+                            <span class="input-group-addon">cm</span>
+                        </div>
+
+                        <span class="label label-default">Telesna teža</span>
+                        <div class="input-group">
+                            <input id="dodajVitalnoTelesnaTeza" type="number" class="form-control input-mini" placeholder="80.00">
+                            <span class="input-group-addon">kg</span>
+                        </div>
+
+                        <span class="label label-default">Telesna temperatura</span>
+                        <div class="input-group">
+                            <input id="dodajVitalnoTelesnaTemperatura" type="number" class="form-control input-mini" placeholder="36.50">
+                            <span class="input-group-addon">°C</span>
+                        </div>
+
+                        <span class="label label-default">Sistolični krvni tlak</span>
+                        <div class="input-group">
+                            <input id="dodajVitalnoKrvniTlakSistolicni" type="number" class="form-control input-mini" placeholder="118">
+                            <span class="input-group-addon">mm Hg</span>
+                        </div>
+
+                        <span class="label label-default">Diastolični krvni tlak</span>
+                        <div class="input-group">
+                            <input id="dodajVitalnoKrvniTlakDiastolicni" type="number" class="form-control input-mini" placeholder="92">
+                            <span class="input-group-addon">mm Hg</span>
+                        </div>
+
+                        <span class="label label-default">Nasičenost krvi s kisikom</span>
+                        <div class="input-group">
+                            <input id="dodajVitalnoNasicenostKrviSKisikom" type="number" class="form-control input-mini" placeholder="98"><span class="input-group-addon">%</span>
+                        </div>
+
+                        <span class="label label-default">Srčni utrip</span>
+                        <input id="dodajSrcniUtrip" type="number" class="form-control input-mini" placeholder="60">
+
+                        <button id="dodajMeritve" type="button" class="btn btn-primary">Dodaj meritve vitalnih znakov</button>
+
+                        <span id="dodajMeritveVitalnihZnakovSporocilo"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nihanje pacientovega stanja -->
+        <div class="row patient-data">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-9 col-md-8 col-sm-12">Informacije o nihanju pacientovega stanja</div>
+                            <div class="col-lg-3 col-md-4 col-sm-12 text-right">
+                                <span class="refresh"><i class="fa fa-refresh" aria-hidden="true"></i> Osveži podatke</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row patient-graph-info">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <canvas id="heartRateResults" width="400" height="400"></canvas>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <canvas id="bmiResults" width="400" height="400"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zunanji vir podatkov -->
+        <div class="row  hospital-map">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">Zunanji vir podatkov</div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="http://www.topendsports.com/testing/heart-rate-resting-chart.htm" target="_blank"> Povezava do uporabljenega zunanjega vira</a>
+                            </div>
+                        </div>
+                        <div class="row patient-graph-info">
+                            <div class="col-lg-6 col-md-6 col-sm-6" id="table1"></div>
+                            <div class="col-lg-6 col-md-6 col-sm-6" id="table2"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nihanje pacientovega stanja -->
+        <div class="row  hospital-map">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">Zemljevid zdravstvenih ustanov</div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row patient-graph-info">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="map" style="width: 100%; height: 150px; overflow: visible; max-width: 100%;">
+                                    <div id="map" style="width: 100%; height: 150px;"></div>
+                                </div>
+
+                            </div>
+                            <!--div class="col-lg-6 col-md-6 col-sm-6">
+                                /
+                            </div-->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="well author text-center">
+                    Avtor: <span class="detail">Jan Novak (63130163)</span>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
-  </div>
-  <!-- KONEC: Vsebina aplikacije -->
+
+
+
+    <!-- KONEC: Vsebina aplikacije -->
 
 </body>
+
 </html>

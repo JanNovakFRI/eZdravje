@@ -3,49 +3,58 @@
 <head>
   <meta charset="utf-8">
   <title>eZdravje :: 4. DN :: OIS 2015/2016</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="knjiznice/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {padding-top: 70px;}
-  </style>
+  <link href="knjiznice/css/bootflat.min.css" rel="stylesheet">
+  <link href="knjiznice/css/custom.css" rel="stylesheet">
+  <link href="https://code.jquery.com/ui/1.11.4/themes/cupertino/jquery-ui.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
   <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
   <script src="knjiznice/js/bootstrap.min.js"></script>
-  <script src="knjiznice/js/koda.js"></script>
 </head>
 <body>
 
   <!-- ZAČETEK: Menujska vrstica na vrhu spletne strani -->
-  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menujska-vrstica">
-          <span class="sr-only">Prikaži menu</span>
-          <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-        </button>
-        <!-- ZAČETEK: Ime vaše aplikacije -->
-        <a class="navbar-brand" href="index.html">{ime vaše aplikacije}</a>
-        <!-- KONEC: Ime vaše aplikacije -->
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menujska-vrstica">
+                  <span class="sr-only">Prikaži menu</span>
+                  <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+              </button>
+              <!-- ZAČETEK: Ime vaše aplikacije -->
+              <a class="navbar-brand" href="index.html">
+                  <i class="fa fa-heartbeat heart" aria-hidden="true"></i> eSrček
+              </a>
+              <!-- KONEC: Ime vaše aplikacije -->
+          </div>
+          <div class="collapse navbar-collapse" id="menujska-vrstica">
+              <ul class="nav navbar-nav">
+                  <li><a href="opis.html">Opis ideje</a></li>
+                  <li><a href="nacrt.html">Načrt informacijske rešitve</a></li>
+                  <li><a href="#" id="generiraj">Generiranje podatkov</a></li>
+              </ul>
+          </div>
       </div>
-      <div class="collapse navbar-collapse" id="menujska-vrstica">
-        <ul class="nav navbar-nav">
-          <li><a href="opis.html">Opis ideje</a></li>
-          <li><a href="nacrt.html">Načrt informacijske rešitve</a></li>
-        </ul>
-      </div>
-    </div>
   </nav>
   <!-- KONEC: Menujska vrstica na vrhu spletne strani -->
 
   <!-- ZAČETEK: Opis delovanja aplikacije -->
   <div class="container">
     <div class="row">
-      <div class="col-lg-12 text-center">
+      <div class="col-lg-12">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">Opis ideje, ki jo aplikacija podpira</h3>
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Opis ideje, ki jo aplikacija podpira -->
-            <p><strong>TO-DO</strong>: Na tem mestu je potrebno dodati <strong>osnovni opis ideje rešitve</strong> (kakšen je osnovni SCENARIJ UPORABE, KDO je ciljna publika, za kakšen NAMEN se aplikacija uporablja).</p><p class="text-muted">Opis naj ne bo daljši od 200 besed.</p>
+            <p>
+                Namen aplikacije je na pregleden način prikazati kritične vitalne znake z dodanim srčnim utripom, saj je le ta pomemben za srčne bolnike.
+                <br><br>Ciljna publika: pacienti z srčnimi težavami
+            </p>
             <!-- KONEC: Opis ideje, ki jo aplikacija podpira -->
           </div>
         </div>
@@ -55,7 +64,39 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
-            <p><strong>TO-DO</strong>: Na tem mestu je navesti zunanji vir podatkov (URL naslov), na kakšen način ste ga uporabili (neposredni API klic, uvožena statična datoteka ipd.) in kaj je bil namen uporabe (kako se vključuje v osnovno idejo aplikacije).</p>
+            <p>
+                <strong class="lead">Primarni zunanji vir:</strong><br><br>
+
+                Za primarni zunanji vir sem si izbral spletno stran, ki prikazuje tabelo podatkov o pričakovanih vrednostih srčnega utripa za določeno starost.
+                <br><br>
+                Ker z JavaScriptom pri pridobivanju spletne strani z AJAX poizvedbo dobimo Cross Domain težavo, sem si pomagal z spletnim orodjem <a href="https://jsonp.afeld.me">https://jsonp.afeld.me</a>, ki ta problem odpravi tako, da stran pridobi na svojem strežniku nazaj pa posreduje zahtevano spletno stran v HTML obliki.
+                <br><br>
+                <a href="http://www.topendsports.com/testing/heart-rate-resting-chart.htm" target="_blank"> Povezava do uporabljenega zunanjega vira</a>
+                <br><br>
+                <a href="./slike/api.png" target="_blank"><img src="./slike/api.png" class="img-responsive" width="500px" /></a>
+
+                <div class="msg alert alert-warning" role="alert">
+                    Če je stran nedosegljiva ali pa blokirana s strani brskalnika primarni zunanji vir ne bo prikazan. Kako nasplošno izgleda pa prikazuje zgornja slika.
+                </div>
+            </p>
+            <p>
+                <strong class="lead">Seznam ostalih zunanjih virov:</strong><br><br>
+                <ul>
+                    <li>Naključni uporabnik (<a href="http://www.randomuser.me">randomuser.me</a>):
+                        <ul>
+                            <li>Za pridobivanje naključnega imena in priimka</li>
+                            <li>Študentu neposredno ni viden<br><br></li>
+                        </ul>
+                    </li>
+                    <li>Google zemljevid API:
+                        <ul>
+                            <li>V primeru okvare primarnega zunanjega vira se ta smatra kot pomožni</li>
+                            <li>Prikazuje bližnje bolnišnice in zdravstvene ustanove v 50 km območju v okolici Ljubljane</li>
+                        </ul>
+                    </li>
+                </ul>
+            </p>
+
             <!-- KONEC: Uporabljeni zunanji viri podatkov -->
           </div>
         </div>
@@ -65,7 +106,22 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Master/detail načrtovalski vzorec -->
-            <p><strong>TO-DO</strong>: Na tem mestu morate navesti uporabljen master/detail načrtovalski vzorec in na kakšen način ga nameravate uporabiti.</p>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <a href="./slike/master-detail-1.png" target="_blank"><img src="./slike/master-detail-1.png" class="img-responsive" /></a>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <a href="./slike/master-detail-2.png" target="_blank"><img src="./slike/master-detail-2.png" class="img-responsive" /></a>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    Prikaz podrobnosti o pacientu na podlagi izbire pacienta preko menija ali ročnega vnosa EHR ID.
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    Prikaz podrobnosti o posamezni meritvi.
+                </div>
+            </div>
             <!-- KONEC: Master/detail načrtovalski vzorec -->
           </div>
         </div>
@@ -75,7 +131,21 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
-            <p><strong>TO-DO</strong>: Na tem mestu je potrebno navesti uporabljeno tehniko vizualizacije podatkov (za pomoč lahko uporabite primer iz <a href="https://github.com/mbostock/d3/wiki/Gallery" target="_blank">D3.js galerije</a>) in zakaj je bila ta tehnika izbrana.</p>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-lg-6 col-md-6 col-sm-6" style="margin-bottom: 10px;">
+                    <a href="./slike/visualization.png" target="_blank"><img src="./slike/visualization.png" class="img-responsive" /></a>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <a href="http://www.chartjs.org" target="_blank"><img src="http://www.chartjs.org/img/chartjs-logo.svg" height="60"/></a><br><br>
+                    Za pomoč pri vizualizaciji sem si izbral knjižico <a href="http://www.chartjs.org" target="_blank">Chart.js</a>, saj jo poznam že od prej in menim, da je primernejša za uporabo ko gre za manjše in enostavnejše količine podatkov.
+                    <br><br>
+                    Uporabljene tehnike vizualizacije:
+                    <ul>
+                        <li>stolpični graf za prikaz meritev srčnega utripa</li>
+                        <li>vrstični (angl. Line) graf za prikaz meritev indeksa telesne mase</li>
+                    </ul>
+                </div>
+            </div>
             <!-- KONEC: Uporabljeni zunanji viri podatkov -->
           </div>
         </div>

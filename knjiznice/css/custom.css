@@ -1,0 +1,187 @@
+html,body {
+    background-color: #F5F7FA;
+}
+
+body {
+    padding-top: 70px;
+}
+
+.label {
+  display: inline-block !important;
+  margin-bottom: 5px !important;
+}
+
+input,.input-group {
+  margin-bottom: 10px !important;
+}
+
+.input-group input {
+  margin-bottom: 0 !important;
+}
+
+.navbar {
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.1);
+}
+
+.panel-heading .row {
+  line-height: 30px;
+}
+
+.navbar,.panel-default>.panel-heading {
+  background: white;
+  border-color: #F5F7FA;
+}
+
+.navbar-brand {
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.heart {
+  color: #E9573F;
+  transition: .2s all;
+}
+
+.panel-danger>.panel-heading {
+    background-color: #E9573F !important;
+}
+
+.navbar-default .navbar-toggle,.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+  background-color: #E9573F;
+  border-color: #E9573F;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu>.divider, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+  background-color: #E9573F;
+  color: white !important;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+  border-color: #E9573F;
+}
+
+.navbar-default .navbar-toggle:hover {
+  background-color: #E9573F;
+  border-color: #d54d36;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: white;
+}
+
+.navbar-brand:hover .heart  {
+  opacity: 0.9;
+}
+
+.navbar-nav li a {
+  transition: .4s all;
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.navbar-nav li a:hover {
+  color: rgba(0, 0, 0, 1) !important;
+}
+
+.msg {
+  text-align: left;
+}
+
+.lbl {
+  font-weight: 400;
+  font-size: 14px !important;
+  display: inline-block !important;
+  margin-bottom: 20px !important;
+}
+
+.checkbox label, .radio label {
+  padding-left: 20px !important;
+}
+
+.checkbox {
+  margin-bottom: 20px;
+}
+
+#rezultatMeritveVitalnihZnakov {
+  padding-top: 22px;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control
+{
+  background: white !important;
+}
+
+#dodajSrcniUtrip {
+  background-image: url("../../slike/heart.svg");
+  background-position: 95% 50%;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+}
+
+.note {
+  margin-top: 20px;
+  display: inline-block;
+}
+
+#kreirajSporocilo,
+#dodajMeritveVitalnihZnakovSporocilo,
+#preberiSporocilo {
+    display: inline-block;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#ehrAnaliza {
+    margin-bottom: 20px !important;
+}
+
+#ehrAnaliza i {
+    color: gray;
+    font-size: 12px;
+}
+
+.pacient_data {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#patient-name {
+    color: #3bafda;
+}
+
+.patient-info {
+    padding: 10px;
+}
+
+.detail {
+    font-style: italic;
+    color: #798fad;
+}
+
+.patient-detail-info .label {
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.patient-data
+{
+    display: none;
+}
+
+.api h2 {
+    font-size: 22px !important;
+    color: #E9573F !important;
+    margin-top: 10px !important;
+}
+
+.api tr:first-of-type td {
+    border: none !important;
+}
+
+.author {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.patient-special {
+    text-decoration: underline;
+}
