@@ -99,30 +99,35 @@ $(document).ready(function(){
             }
         ]
     };
+    var bmiChart,heartRateChart;
 
-    var bmiChart = new Chart(bmiResults, {
-      type: 'line',
-      data: dataBMI,
-      options: {
-          scales: {
-                  xAxes: [{
-                          display: false
-                  }],
+    if (bmiResults && heartRate && bmiResults.length > 0 && heartRate.length > 0)
+    {
+        bmiChart = new Chart(bmiResults, {
+          type: 'line',
+          data: dataBMI,
+          options: {
+              scales: {
+                      xAxes: [{
+                              display: false
+                      }],
+                  }
               }
-          }
-    });
+        });
 
-    var heartRateChart = new Chart(heartRate, {
-      type: 'bar',
-      data: dataHeartBeat,
-      options: { scales: { xAxes: [{ display: false }] } }
-    });
+        heartRateChart = new Chart(heartRate, {
+          type: 'bar',
+          data: dataHeartBeat,
+          options: { scales: { xAxes: [{ display: false }] } }
+        });
+    }
+
 
     izpolniObrazec("#preberiObstojeciEHR","#preberiEHRzapis");
     izpolniObrazec("#preberiObstojeciVitalniZnak","#vnosMeritevVitalnihZnakov");
 
     $("#generiraj").click(function(){
-        generirajSporocilo("#globalnaSporocila","warning",true,"Poteka generiranje vzorčnih podatkov, prosimo počakajte!");
+        sestaviSporocilo("#globalnaSporocila","warning",true,"Poteka generiranje vzorčnih podatkov, prosimo počakajte!");
         generirajPodatke(1);
         generirajPodatke(2);
         generirajPodatke(3);
