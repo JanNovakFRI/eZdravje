@@ -484,6 +484,7 @@ function generiraj(userID) {
                     type: 'POST',
                     success: function(data) {
                         var ehrId = data.ehrId;
+                        
                         var partyData = {
                             firstNames: ime,
                             lastNames: priimek,
@@ -516,11 +517,12 @@ function generiraj(userID) {
                                             priimek: priimek,
                                             ehr: ehrId
                                     };
+
                                     vnosVitalnihMeritev(ehrId, true, true, initTeza, initVisina);
                                     vnosVitalnihMeritev(ehrId, true, true, nakljucnoStevilo(initTeza - 5, initTeza + 5), initVisina + 2);
                                     vnosVitalnihMeritev(ehrId, true, true, nakljucnoStevilo(initTeza - 5, initTeza + 5), initVisina + 2);
                                     vnosVitalnihMeritev(ehrId, true, true, nakljucnoStevilo(initTeza - 5, initTeza + 5), initVisina + 2);
-                                    vnosVitalnihMeritev(ehrId, true, true, nakljucnoStevilo(initTeza - 5, initTeza + 5), initVisina + 2, success,callback_data );
+                                    vnosVitalnihMeritev(ehrId, true, true, nakljucnoStevilo(initTeza - 5, initTeza + 5), initVisina + 2, success,callback_data);
                                 }
                             },
                             error: function(err) {
